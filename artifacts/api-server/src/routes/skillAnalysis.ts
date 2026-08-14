@@ -15,7 +15,7 @@ router.get("/skill-analysis", async (_req, res): Promise<void> => {
     return;
   }
 
-  const allJobs = getAllJobs();
+  const allJobs = await getAllJobs();
 
   const analyses = targetRoles.map((targetRole) => {
     const lowerRole = targetRole.roleName.toLowerCase();

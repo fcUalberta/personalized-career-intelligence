@@ -16,7 +16,7 @@ router.get("/dashboard/summary", async (_req, res): Promise<void> => {
     .from(alertsTable)
     .where(eq(alertsTable.isRead, false));
 
-  const allJobs = getAllJobs();
+  const allJobs = await getAllJobs();
 
   // Compute matches and find top match score
   let topMatchScore = 0;

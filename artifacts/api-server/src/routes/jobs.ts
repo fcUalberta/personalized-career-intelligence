@@ -18,7 +18,7 @@ router.get("/jobs/search", async (req, res): Promise<void> => {
   }
 
   const { role, location, page } = params.data;
-  const result = getJobsByRoleAndLocation(role, location, page ?? 1);
+  const result = await getJobsByRoleAndLocation(role, location, page ?? 1);
 
   res.json(
     SearchJobsResponse.parse({
@@ -43,7 +43,7 @@ router.get("/jobs/matches", async (req, res): Promise<void> => {
   const [profile] = await db.select().from(profilesTable).limit(1);
   const userSkills = profile?.skills ?? [];
 
-  let jobs = getAllJobs();
+  let jobs = await getAllJobs();
 
   // If targetRoleId is provided, filter by matching role name
   if (params.data.targetRoleId != null) {
