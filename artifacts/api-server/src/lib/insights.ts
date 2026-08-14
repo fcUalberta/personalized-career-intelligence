@@ -88,9 +88,12 @@ export function buildCompData(
   role: string,
   location: string,
   desiredCompMin: number | null,
-  yearsExp: number
+  yearsExp: number,
+  liveBand?: { p25: number; p50: number; p75: number; p90: number; sampleSize?: number; source?: string }
 ) {
-  const band = getCompBand(role, location);
+  const band: CompBand = liveBand
+    ? { p25: liveBand.p25, p50: liveBand.p50, p75: liveBand.p75, p90: liveBand.p90 }
+    : getCompBand(role, location);
   const userPercentile = computeUserPercentile(desiredCompMin, yearsExp, band);
 
   // Simulate quarterly trend based on role keyword
@@ -115,7 +118,8 @@ export function buildCompData(
     userPercentile,
     trend,
     trendPercent,
-    sampleSize: Math.round(Math.random() * 300 + 200),
+    sampleSize: liveBand?.sampleSize ?? Math.round(Math.random() * 300 + 200),
+    dataSource: liveBand?.source ?? "Career Compass Model",
   };
 }
 
