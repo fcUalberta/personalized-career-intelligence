@@ -87,6 +87,14 @@ function jsearchJobToRaw(j: JSearchJob): RawJob {
   };
 }
 
+// ---------------------------------------------------------------------------
+// TTL cache — one shared pool, refreshed at most every 10 minutes
+// ---------------------------------------------------------------------------
+const CACHE_TTL_MS = 10 * 60 * 1000; // 10 minutes
+let cachedJobs: RawJob[] = [];
+let cacheExpiresAt = 0;
+let inflight: Promise<RawJob[]> | null = null;
+
 async function fetchFromJSearch(query: string, page = 1): Promise<RawJob[]> {
   const key = process.env.RAPIDAPI_KEY;
   if (!key) return [];
@@ -116,6 +124,38 @@ async function fetchFromJSearch(query: string, page = 1): Promise<RawJob[]> {
     console.error("JSearch fetch failed:", err);
     return [];
   }
+}
+
+/**
+ * Fetches a shared pool of jobs from JSearch, cached for 10 minutes.
+ * All callers share a single in-flight request to avoid rate-limit storms.
+ */
+async function getJSearchPool(): Promise<RawJob[]> {
+  if (Date.now() < cacheExpiresAt && cachedJobs.length > 0) {
+    return cachedJobs;
+  }
+
+  // Coalesce concurrent callers behind one request
+  if (inflight) return inflight;
+
+  inflight = (async () => {
+    try {
+      const jobs = await fetchFromJSearch(
+        "software engineer developer Toronto Canada",
+        1
+      );
+      if (jobs.length > 0) {
+        cachedJobs = jobs;
+        cacheExpiresAt = Date.now() + CACHE_TTL_MS;
+        console.log(`JSearch: cached ${jobs.length} jobs`);
+      }
+      return cachedJobs.length > 0 ? cachedJobs : [];
+    } finally {
+      inflight = null;
+    }
+  })();
+
+  return inflight;
 }
 
 // ---------------------------------------------------------------------------
@@ -317,23 +357,18 @@ export async function getJobsByRoleAndLocation(
   location: string,
   page = 1
 ): Promise<{ jobs: RawJob[]; total: number; page: number }> {
-  if (process.env.RAPIDAPI_KEY) {
-    const query = location
-      ? `${role} in ${location}`
-      : role;
-    const jobs = await fetchFromJSearch(query, page);
-    if (jobs.length > 0) {
-      return { jobs, total: jobs.length, page };
-    }
-  }
+  const pool = process.env.RAPIDAPI_KEY
+    ? (await getJSearchPool())
+    : MOCK_POOL;
 
-  // Fallback to mock
+  const source = pool.length > 0 ? pool : MOCK_POOL;
   const lowerRole = role.toLowerCase();
   const lowerLocation = location.toLowerCase();
-  const filtered = MOCK_POOL.filter((job) => {
+
+  const filtered = source.filter((job) => {
     const titleMatch =
       job.title.toLowerCase().includes(lowerRole) ||
-      lowerRole.includes(job.title.toLowerCase().split(" ")[0]?.toLowerCase() ?? "");
+      lowerRole.split(" ").some((w) => job.title.toLowerCase().includes(w));
     const locationMatch =
       !lowerLocation ||
       lowerLocation === "anywhere" ||
@@ -341,6 +376,7 @@ export async function getJobsByRoleAndLocation(
       job.location.toLowerCase().includes(lowerLocation.split(",")[0]?.trim() ?? "");
     return titleMatch || locationMatch;
   });
+
   const pageSize = 10;
   const start = (page - 1) * pageSize;
   return { jobs: filtered.slice(start, start + pageSize), total: filtered.length, page };
@@ -348,12 +384,8 @@ export async function getJobsByRoleAndLocation(
 
 export async function getAllJobs(): Promise<RawJob[]> {
   if (process.env.RAPIDAPI_KEY) {
-    const [ca, us] = await Promise.all([
-      fetchFromJSearch("software engineer developer Canada", 1),
-      fetchFromJSearch("software engineer developer United States", 1),
-    ]);
-    const combined = [...ca, ...us];
-    if (combined.length > 0) return combined;
+    const jobs = await getJSearchPool();
+    if (jobs.length > 0) return jobs;
   }
   return MOCK_POOL;
 }
