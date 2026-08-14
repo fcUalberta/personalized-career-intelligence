@@ -20,7 +20,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
       <div className="w-64 border-r border-border bg-card flex flex-col">
         <div className="h-16 flex items-center px-6 border-b border-border bg-muted/10">
           <Zap className="h-5 w-5 text-primary mr-2" />
-          <span className="font-mono font-bold text-lg tracking-tight uppercase">TERM_INTEL</span>
+          <span className="font-mono font-bold text-lg tracking-tight uppercase">Career Compass</span>
         </div>
         
         <nav className="flex-1 py-4 flex flex-col gap-1 px-3">

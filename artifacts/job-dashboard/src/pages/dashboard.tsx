@@ -7,7 +7,7 @@ import { cn } from "@/lib/utils";
 
 export default function Dashboard() {
   const { data: summary, isLoading: isLoadingSummary } = useGetDashboardSummary();
-  const { data: matches, isLoading: isLoadingMatches } = useGetJobMatches({ minMatch: 70 });
+  const { data: matches, isLoading: isLoadingMatches } = useGetJobMatches({ minMatch: 50 });
 
   return (
     <div className="max-w-6xl mx-auto space-y-6">
