@@ -1,0 +1,28 @@
+kind = "web"
+previewPath = "/"
+title = "Job Intelligence Dashboard"
+description = "A personalized job and role intelligence dashboard for job seekers. Analyzes the user's resume/skills, lets them set target roles and locations, shows real-time job postings with skill match percentages, comp percentile banding, career trajectory, peer benchmarking, and alert nudges."
+version = "1.0.0"
+id = "artifacts/job-dashboard"
+router = "path"
+
+[[services]]
+name = "web"
+paths = [ "/" ]
+localPort = 23561
+
+[services.development]
+run = "pnpm --filter @workspace/job-dashboard run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/job-dashboard", "run", "build" ]
+serve = "static"
+publicDir = "artifacts/job-dashboard/dist/public"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "23561"
+BASE_PATH = "/"

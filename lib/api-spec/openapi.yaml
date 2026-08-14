@@ -3,20 +3,32 @@ info:
   # Do not change the title, if the title changes, the import paths will be broken
   title: Api
   version: 0.1.0
-  description: API specification
+  description: Job Intelligence Dashboard API
 servers:
   - url: /api
     description: Base API path
 tags:
   - name: health
     description: Health operations
+  - name: profile
+    description: User profile operations
+  - name: target-roles
+    description: Target role management
+  - name: jobs
+    description: Job search and matching
+  - name: insights
+    description: Skill analysis, comp data, career trajectory, peer benchmarking
+  - name: alerts
+    description: Alert and nudge management
+  - name: dashboard
+    description: Dashboard summary
+
 paths:
   /healthz:
     get:
       operationId: healthCheck
       tags: [health]
       summary: Health check
-      description: Returns server health status
       responses:
         "200":
           description: Healthy
@@ -24,13 +36,587 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/HealthStatus"
+
+  /profile:
+    get:
+      operationId: getProfile
+      tags: [profile]
+      summary: Get current user profile
+      responses:
+        "200":
+          description: User profile
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UserProfile"
+        "404":
+          description: Profile not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+    put:
+      operationId: updateProfile
+      tags: [profile]
+      summary: Create or update user profile
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UserProfileInput"
+      responses:
+        "200":
+          description: Updated profile
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UserProfile"
+
+  /target-roles:
+    get:
+      operationId: listTargetRoles
+      tags: [target-roles]
+      summary: List all target roles
+      responses:
+        "200":
+          description: List of target roles
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/TargetRole"
+    post:
+      operationId: createTargetRole
+      tags: [target-roles]
+      summary: Add a new target role
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/TargetRoleInput"
+      responses:
+        "201":
+          description: Created target role
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/TargetRole"
+
+  /target-roles/{id}:
+    delete:
+      operationId: deleteTargetRole
+      tags: [target-roles]
+      summary: Remove a target role
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: number
+      responses:
+        "204":
+          description: Deleted
+        "404":
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
+  /jobs/search:
+    get:
+      operationId: searchJobs
+      tags: [jobs]
+      summary: Search live job postings
+      parameters:
+        - name: role
+          in: query
+          required: true
+          schema:
+            type: string
+        - name: location
+          in: query
+          required: true
+          schema:
+            type: string
+        - name: page
+          in: query
+          schema:
+            type: number
+            default: 1
+      responses:
+        "200":
+          description: Job search results
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/JobSearchResult"
+
+  /jobs/matches:
+    get:
+      operationId: getJobMatches
+      tags: [jobs]
+      summary: Get job postings matched and scored against user profile
+      parameters:
+        - name: targetRoleId
+          in: query
+          schema:
+            type: number
+        - name: minMatch
+          in: query
+          schema:
+            type: number
+            default: 0
+      responses:
+        "200":
+          description: Matched job postings with scores
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/MatchedJob"
+
+  /skill-analysis:
+    get:
+      operationId: getSkillAnalysis
+      tags: [insights]
+      summary: Skill gap analysis for all target roles
+      responses:
+        "200":
+          description: Skill gap analysis per target role
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/SkillAnalysis"
+
+  /comp-data:
+    get:
+      operationId: getCompData
+      tags: [insights]
+      summary: Compensation data and percentile positioning
+      parameters:
+        - name: role
+          in: query
+          schema:
+            type: string
+        - name: location
+          in: query
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Compensation data
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CompData"
+
+  /career-trajectory:
+    get:
+      operationId: getCareerTrajectory
+      tags: [insights]
+      summary: Personalized next likely roles based on profile
+      responses:
+        "200":
+          description: Career trajectory data
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CareerTrajectory"
+
+  /peer-benchmark:
+    get:
+      operationId: getPeerBenchmark
+      tags: [insights]
+      summary: Anonymized peer comparison for target roles
+      responses:
+        "200":
+          description: Peer benchmarking data
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PeerBenchmark"
+
+  /alerts:
+    get:
+      operationId: listAlerts
+      tags: [alerts]
+      summary: Get personalized alerts and nudges
+      responses:
+        "200":
+          description: List of alerts
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Alert"
+
+  /alerts/{id}/read:
+    patch:
+      operationId: markAlertRead
+      tags: [alerts]
+      summary: Mark alert as read
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: number
+      responses:
+        "200":
+          description: Updated alert
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Alert"
+        "404":
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
+  /dashboard/summary:
+    get:
+      operationId: getDashboardSummary
+      tags: [dashboard]
+      summary: Aggregated dashboard overview
+      responses:
+        "200":
+          description: Dashboard summary
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DashboardSummary"
+
 components:
   schemas:
     HealthStatus:
       type: object
+      required: [status]
       properties:
         status:
           type: string
-      required:
-        - status
 
+    ErrorResponse:
+      type: object
+      required: [error]
+      properties:
+        error:
+          type: string
+
+    UserProfile:
+      type: object
+      required: [id, currentTitle, skills, yearsExperience, industry, createdAt, updatedAt]
+      properties:
+        id:
+          type: number
+        currentTitle:
+          type: string
+        skills:
+          type: array
+          items:
+            type: string
+        yearsExperience:
+          type: number
+        industry:
+          type: string
+        location:
+          type: ["string", "null"]
+        linkedinUrl:
+          type: ["string", "null"]
+        bio:
+          type: ["string", "null"]
+        desiredCompMin:
+          type: ["integer", "null"]
+        createdAt:
+          type: string
+        updatedAt:
+          type: string
+
+    UserProfileInput:
+      type: object
+      required: [currentTitle, skills, yearsExperience, industry]
+      properties:
+        currentTitle:
+          type: string
+          minLength: 1
+        skills:
+          type: array
+          items:
+            type: string
+          minItems: 1
+        yearsExperience:
+          type: number
+          minimum: 0
+        industry:
+          type: string
+          minLength: 1
+        location:
+          type: string
+        linkedinUrl:
+          type: string
+        bio:
+          type: string
+        desiredCompMin:
+          type: number
+
+    TargetRole:
+      type: object
+      required: [id, roleName, location, compFloor, createdAt]
+      properties:
+        id:
+          type: number
+        roleName:
+          type: string
+        location:
+          type: string
+        compFloor:
+          type: number
+        priority:
+          type: ["integer", "null"]
+        createdAt:
+          type: string
+
+    TargetRoleInput:
+      type: object
+      required: [roleName, location, compFloor]
+      properties:
+        roleName:
+          type: string
+          minLength: 1
+        location:
+          type: string
+          minLength: 1
+        compFloor:
+          type: number
+          minimum: 0
+        priority:
+          type: number
+
+    JobPosting:
+      type: object
+      required: [id, title, company, location, salary, description, postedAt, source, url]
+      properties:
+        id:
+          type: string
+        title:
+          type: string
+        company:
+          type: string
+        location:
+          type: string
+        salary:
+          type: ["integer", "null"]
+        salaryMax:
+          type: ["integer", "null"]
+        description:
+          type: string
+        postedAt:
+          type: string
+        source:
+          type: string
+        url:
+          type: string
+
+    MatchedJob:
+      type: object
+      required: [job, matchScore, matchedSkills, missingSkills]
+      properties:
+        job:
+          $ref: "#/components/schemas/JobPosting"
+        matchScore:
+          type: number
+          description: Percentage 0-100
+        matchedSkills:
+          type: array
+          items:
+            type: string
+        missingSkills:
+          type: array
+          items:
+            type: string
+
+    JobSearchResult:
+      type: object
+      required: [jobs, total, page]
+      properties:
+        jobs:
+          type: array
+          items:
+            $ref: "#/components/schemas/JobPosting"
+        total:
+          type: number
+        page:
+          type: number
+
+    SkillGapItem:
+      type: object
+      required: [skill, inDemandCount, hasSkill]
+      properties:
+        skill:
+          type: string
+        inDemandCount:
+          type: number
+        hasSkill:
+          type: boolean
+        importance:
+          type: string
+
+    SkillAnalysis:
+      type: object
+      required: [targetRoleId, roleName, matchPercentage, matchedSkills, gapSkills, totalJobsAnalyzed]
+      properties:
+        targetRoleId:
+          type: number
+        roleName:
+          type: string
+        matchPercentage:
+          type: number
+        matchedSkills:
+          type: array
+          items:
+            type: string
+        gapSkills:
+          type: array
+          items:
+            $ref: "#/components/schemas/SkillGapItem"
+        totalJobsAnalyzed:
+          type: number
+
+    CompBand:
+      type: object
+      required: [p25, p50, p75, p90]
+      properties:
+        p25:
+          type: number
+        p50:
+          type: number
+        p75:
+          type: number
+        p90:
+          type: number
+
+    CompData:
+      type: object
+      required: [role, location, band, userPercentile, trend, trendPercent, sampleSize]
+      properties:
+        role:
+          type: string
+        location:
+          type: string
+        band:
+          $ref: "#/components/schemas/CompBand"
+        userPercentile:
+          type: number
+          description: User's estimated percentile 0-100
+        trend:
+          type: string
+          description: "up, down, or flat"
+        trendPercent:
+          type: number
+          description: Percentage change vs last quarter
+        sampleSize:
+          type: number
+
+    CareerStep:
+      type: object
+      required: [title, typicalYearsToReach, salaryRange, skillsNeeded, transitionRate]
+      properties:
+        title:
+          type: string
+        typicalYearsToReach:
+          type: number
+        salaryRange:
+          type: string
+        skillsNeeded:
+          type: array
+          items:
+            type: string
+        transitionRate:
+          type: number
+          description: Percentage of similar profiles who made this transition
+
+    CareerTrajectory:
+      type: object
+      required: [currentTitle, nextRoles, lateralMoves, insights]
+      properties:
+        currentTitle:
+          type: string
+        nextRoles:
+          type: array
+          items:
+            $ref: "#/components/schemas/CareerStep"
+        lateralMoves:
+          type: array
+          items:
+            $ref: "#/components/schemas/CareerStep"
+        insights:
+          type: array
+          items:
+            type: string
+
+    PeerBenchmark:
+      type: object
+      required: [targetRole, skillPercentile, experiencePercentile, overallPercentile, sampleSize, insights]
+      properties:
+        targetRole:
+          type: string
+        skillPercentile:
+          type: number
+        experiencePercentile:
+          type: number
+        overallPercentile:
+          type: number
+        sampleSize:
+          type: number
+        insights:
+          type: array
+          items:
+            type: string
+
+    Alert:
+      type: object
+      required: [id, type, message, isRead, createdAt]
+      properties:
+        id:
+          type: number
+        type:
+          type: string
+          description: "job_match, comp_change, trajectory, skill_gap"
+        message:
+          type: string
+        isRead:
+          type: boolean
+        targetRole:
+          type: ["string", "null"]
+        createdAt:
+          type: string
+
+    DashboardSummary:
+      type: object
+      required: [newJobMatchesThisWeek, topMatchScore, unreadAlerts, activeTargetRoles, profileComplete, topTargetRole]
+      properties:
+        newJobMatchesThisWeek:
+          type: number
+        topMatchScore:
+          type: number
+        unreadAlerts:
+          type: number
+        activeTargetRoles:
+          type: number
+        profileComplete:
+          type: boolean
+        topTargetRole:
+          type: ["string", "null"]
+        avgCompPercentile:
+          type: ["integer", "null"]
+        peakMatchRole:
+          type: ["string", "null"]
