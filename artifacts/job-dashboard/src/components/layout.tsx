@@ -6,8 +6,8 @@ export function Layout({ children }: { children: React.ReactNode }) {
   const [location] = useLocation();
 
   const navigation = [
-    { name: "Overview", href: "/", icon: LayoutDashboard },
-    { name: "Job Seeker Profile", href: "/profile", icon: User },
+    { name: "Dashboard", href: "/", icon: LayoutDashboard },
+    { name: "Profile", href: "/profile", icon: User },
     { name: "Target Roles", href: "/target-roles", icon: Target },
     { name: "Live Jobs", href: "/jobs", icon: Briefcase },
     { name: "Insights", href: "/insights", icon: BarChart },

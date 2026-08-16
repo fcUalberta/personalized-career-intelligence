@@ -12,7 +12,7 @@ export default function Dashboard() {
   return (
     <div className="max-w-6xl mx-auto space-y-6">
       <div>
-        <h1 className="text-2xl font-bold font-mono tracking-tight">COMMAND CENTER</h1>
+        <h1 className="text-2xl font-bold font-mono tracking-tight">DASHBOARD</h1>
         <p className="text-muted-foreground">Real-time intelligence for your career operation.</p>
       </div>
 
