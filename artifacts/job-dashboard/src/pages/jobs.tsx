@@ -21,7 +21,7 @@ export default function Jobs() {
     <div className="max-w-6xl mx-auto space-y-6">
       <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-4">
         <div>
-          <h1 className="text-2xl font-bold font-mono tracking-tight">LIVE JOB FEED</h1>
+          <h1 className="text-4xl font-bold uppercase tracking-[-0.02em] leading-none" style={{ fontFamily: "'Archivo Expanded', 'Archivo', sans-serif" }}>Live Job Feed</h1>
           <p className="text-muted-foreground">Scored and filtered against your profile vector.</p>
         </div>
         

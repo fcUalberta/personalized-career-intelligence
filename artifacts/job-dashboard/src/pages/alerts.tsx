@@ -33,7 +33,7 @@ export default function Alerts() {
     <div className="max-w-4xl mx-auto space-y-6">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-bold font-mono tracking-tight">SYSTEM ALERTS</h1>
+          <h1 className="text-4xl font-bold uppercase tracking-[-0.02em] leading-none" style={{ fontFamily: "'Archivo Expanded', 'Archivo', sans-serif" }}>System Alerts</h1>
           <p className="text-muted-foreground">Event log for matched data triggers.</p>
         </div>
         <Badge variant="outline" className="font-mono text-sm py-1">

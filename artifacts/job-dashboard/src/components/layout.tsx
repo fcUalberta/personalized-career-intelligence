@@ -1,6 +1,8 @@
 import { Link, useLocation } from "wouter";
-import { LayoutDashboard, User, Target, Briefcase, BarChart2, Bell, Compass } from "lucide-react";
+import { LayoutDashboard, User, Target, Briefcase, BarChart2, Bell, Zap, ArrowUpRight } from "lucide-react";
 import { cn } from "@/lib/utils";
+
+const TICKER = "CAREER COMPASS — REAL-TIME INTELLIGENCE FOR YOUR CAREER — LIVE JOB MATCHES — COMP BENCHMARKING — SKILL GAP ANALYSIS — MARKET POSITIONING — ";
 
 export function Layout({ children }: { children: React.ReactNode }) {
   const [location] = useLocation();
@@ -14,24 +16,31 @@ export function Layout({ children }: { children: React.ReactNode }) {
     { name: "Alerts", href: "/alerts", icon: Bell },
   ];
 
+  const routeLabel = location === "/"
+    ? "Dashboard"
+    : location.replace("/", "").replace(/-/g, " ");
+
   return (
     <div className="flex min-h-screen bg-background text-foreground">
-      {/* Sidebar */}
-      <div className="w-60 border-r border-sidebar-border bg-sidebar flex flex-col shrink-0">
+      {/* Film grain */}
+      <div className="grain" aria-hidden="true" />
+
+      {/* ===== Sidebar — dark editorial column ===== */}
+      <div className="w-56 border-r border-sidebar-border bg-sidebar flex flex-col shrink-0">
 
         {/* Brand */}
-        <div className="h-16 flex items-center gap-3 px-5 border-b border-sidebar-border">
-          <Compass className="h-4 w-4 text-primary shrink-0" strokeWidth={1.5} />
+        <div className="h-14 flex items-center gap-2.5 px-5 border-b border-sidebar-border">
+          <Zap className="h-3.5 w-3.5 fill-primary text-primary shrink-0" strokeWidth={1.5} />
           <span
-            className="text-xl leading-none tracking-wide text-primary"
-            style={{ fontFamily: "'Cormorant Garamond', serif", fontStyle: "italic", fontWeight: 500 }}
+            className="text-[13px] font-bold tracking-[0.18em] uppercase text-sidebar-foreground leading-none"
+            style={{ fontFamily: "'Archivo Expanded', 'Archivo', sans-serif" }}
           >
             Career Compass
           </span>
         </div>
 
         {/* Nav */}
-        <nav className="flex-1 py-6 flex flex-col gap-0.5 px-3">
+        <nav className="flex-1 py-4 flex flex-col">
           {navigation.map((item) => {
             const isActive = location === item.href;
             const Icon = item.icon;
@@ -40,49 +49,76 @@ export function Layout({ children }: { children: React.ReactNode }) {
                 key={item.name}
                 href={item.href}
                 className={cn(
-                  "relative flex items-center gap-3 px-3 py-2.5 text-sm rounded-[var(--radius)] transition-all duration-150",
+                  "relative flex items-center gap-3 px-5 py-3 text-[11px] font-mono uppercase tracking-[0.14em] transition-colors duration-150 border-b border-sidebar-border/40",
                   isActive
                     ? "bg-sidebar-accent text-primary"
-                    : "text-muted-foreground hover:text-sidebar-foreground hover:bg-sidebar-accent/60"
+                    : "text-sidebar-foreground/55 hover:text-sidebar-foreground hover:bg-sidebar-accent/70"
                 )}
               >
-                {/* Gold left accent bar for active */}
                 {isActive && (
-                  <span className="absolute left-0 top-1.5 bottom-1.5 w-0.5 rounded-full bg-primary" />
+                  <span className="absolute left-0 top-0 bottom-0 w-[2px] bg-primary" />
                 )}
                 <Icon
-                  className={cn("shrink-0 h-4 w-4", isActive ? "text-primary" : "text-muted-foreground")}
+                  className={cn("shrink-0 h-3.5 w-3.5", isActive ? "text-primary" : "text-sidebar-foreground/40")}
                   strokeWidth={1.5}
                 />
-                <span className={cn("font-medium", isActive ? "text-primary" : "")}>{item.name}</span>
+                {item.name}
               </Link>
             );
           })}
         </nav>
 
         {/* Status */}
-        <div className="px-5 py-4 border-t border-sidebar-border">
-          <div className="flex items-center gap-2 text-xs text-muted-foreground">
-            <span className="relative flex h-1.5 w-1.5">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-accent opacity-60"></span>
-              <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-accent"></span>
+        <div className="px-5 py-4 border-t border-sidebar-border/40">
+          <div className="flex items-center gap-2 text-[10px] font-mono uppercase tracking-[0.16em] text-sidebar-foreground/35">
+            <span className="relative flex h-1.5 w-1.5 shrink-0">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-50" />
+              <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-primary" />
             </span>
             Live data connected
           </div>
         </div>
       </div>
 
-      {/* Main content */}
+      {/* ===== Main ===== */}
       <div className="flex-1 flex flex-col overflow-hidden min-w-0">
-        {/* Header */}
-        <header className="h-14 border-b border-border bg-card/50 backdrop-blur-sm flex items-center px-8 justify-between shrink-0">
-          <div className="text-xs font-mono text-muted-foreground tracking-widest uppercase">
-            {location === "/" ? "Dashboard" : location.replace("/", "").replace(/-/g, " ")}
+
+        {/* Masthead */}
+        <header className="flex items-stretch border-b border-border bg-card shrink-0" style={{ height: "3.5rem" }}>
+          <div className="flex items-center px-6 border-r border-border">
+            <span
+              className="text-[11px] font-mono uppercase tracking-[0.2em] text-muted-foreground"
+            >
+              {routeLabel}
+            </span>
           </div>
-          <div className="text-xs font-mono text-muted-foreground/60">
-            {new Date().toLocaleDateString("en-CA", { year: "numeric", month: "short", day: "numeric" })}
+          <div className="flex-1 flex items-center px-6">
+            <span className="text-[10px] font-mono uppercase tracking-[0.18em] text-muted-foreground/50">
+              Career Intelligence Platform
+            </span>
+          </div>
+          <div className="flex items-center gap-4 px-6 border-l border-border">
+            <span className="text-[10px] font-mono uppercase tracking-[0.16em] text-muted-foreground/50">
+              {new Date().toLocaleDateString("en-CA", { year: "numeric", month: "short", day: "numeric" })}
+            </span>
+            <span className="h-1.5 w-1.5 rounded-full bg-primary animate-pulse" />
           </div>
         </header>
+
+        {/* Ticker */}
+        <div className="w-full overflow-hidden border-b border-border bg-foreground py-2 text-background shrink-0">
+          <div className="ticker-track flex w-max whitespace-nowrap">
+            {[0, 1, 2, 3].map((i) => (
+              <span
+                key={i}
+                className="text-[10px] uppercase tracking-[0.22em] px-8 opacity-80"
+                style={{ fontFamily: "'Archivo Expanded', 'Archivo', sans-serif", fontWeight: 600 }}
+              >
+                {TICKER}
+              </span>
+            ))}
+          </div>
+        </div>
 
         <main className="flex-1 overflow-auto p-8">
           {children}
