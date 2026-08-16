@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Spline+Sans+Mono:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500;1,600&family=Inter:wght@300;400;500;600&family=Spline+Sans+Mono:wght@400;500&display=swap');
 @import 'tailwindcss';
 @import 'tw-animate-css';
 @plugin "@tailwindcss/typography";
@@ -47,97 +47,67 @@
 
   --font-sans: var(--app-font-sans);
   --font-mono: var(--app-font-mono);
+  --font-display: var(--app-font-display);
 
   --radius-sm: var(--radius);
-  --radius-md: var(--radius);
-  --radius-lg: var(--radius);
-  --radius-xl: var(--radius);
+  --radius-md: calc(var(--radius) * 1.5);
+  --radius-lg: calc(var(--radius) * 2);
+  --radius-xl: calc(var(--radius) * 3);
 }
 
 :root {
-  --background: 210 20% 98%;
-  --foreground: 222 47% 11%;
-  --border: 214 32% 91%;
-  --input: 214 32% 91%;
-  --ring: 230 75% 45%;
+  /* Obsidian base — warm near-black */
+  --background: 30 8% 7%;
+  --foreground: 40 12% 88%;
+  --border: 30 6% 15%;
+  --input: 30 6% 13%;
+  --ring: 43 70% 55%;
 
-  --card: 0 0% 100%;
-  --card-foreground: 222 47% 11%;
-  --card-border: 214 32% 91%;
+  /* Cards: slightly raised */
+  --card: 30 7% 10%;
+  --card-foreground: 40 12% 88%;
+  --card-border: 30 6% 16%;
 
-  --popover: 0 0% 100%;
-  --popover-foreground: 222 47% 11%;
-  --popover-border: 214 32% 91%;
+  --popover: 30 7% 10%;
+  --popover-foreground: 40 12% 88%;
+  --popover-border: 30 6% 16%;
 
-  --primary: 230 75% 45%;
-  --primary-foreground: 210 40% 98%;
-  --primary-border: 230 75% 40%;
+  /* Champagne gold — the accent that lifts everything */
+  --primary: 43 70% 55%;
+  --primary-foreground: 30 8% 7%;
+  --primary-border: 43 70% 45%;
 
-  --secondary: 214 32% 91%;
-  --secondary-foreground: 222 47% 11%;
-  --secondary-border: 214 32% 80%;
+  /* Subtle secondary surfaces */
+  --secondary: 30 6% 14%;
+  --secondary-foreground: 40 10% 75%;
+  --secondary-border: 30 6% 18%;
 
-  --muted: 210 40% 96%;
-  --muted-foreground: 215 16% 47%;
+  /* Muted — quiet text and fills */
+  --muted: 30 6% 12%;
+  --muted-foreground: 30 8% 46%;
 
-  --accent: 150 70% 45%;
-  --accent-foreground: 0 0% 100%;
+  /* Emerald accent for positive signals */
+  --accent: 152 42% 42%;
+  --accent-foreground: 40 12% 92%;
 
-  --destructive: 0 84% 60%;
-  --destructive-foreground: 210 40% 98%;
+  --destructive: 0 60% 50%;
+  --destructive-foreground: 40 12% 92%;
 
-  --sidebar: 222 47% 11%;
-  --sidebar-foreground: 210 40% 98%;
-  --sidebar-border: 222 47% 15%;
-  --sidebar-primary: 230 75% 45%;
-  --sidebar-primary-foreground: 210 40% 98%;
-  --sidebar-accent: 222 47% 15%;
-  --sidebar-accent-foreground: 210 40% 98%;
+  /* Sidebar: deepest layer */
+  --sidebar: 30 8% 6%;
+  --sidebar-foreground: 40 10% 80%;
+  --sidebar-border: 30 6% 13%;
+  --sidebar-primary: 43 70% 55%;
+  --sidebar-primary-foreground: 30 8% 7%;
+  --sidebar-accent: 30 6% 11%;
+  --sidebar-accent-foreground: 40 12% 88%;
 
-  --app-font-sans: 'Plus Jakarta Sans', sans-serif;
+  --app-font-sans: 'Inter', sans-serif;
   --app-font-mono: 'Spline Sans Mono', monospace;
-  --radius: 0rem;
-}
+  --app-font-display: 'Cormorant Garamond', serif;
 
-.dark {
-  --background: 222 47% 11%;
-  --foreground: 210 40% 98%;
-  --border: 214 32% 20%;
-  --input: 214 32% 20%;
-  --ring: 230 75% 65%;
-
-  --card: 222 47% 13%;
-  --card-foreground: 210 40% 98%;
-  --card-border: 214 32% 20%;
-
-  --popover: 222 47% 13%;
-  --popover-foreground: 210 40% 98%;
-  --popover-border: 214 32% 20%;
-
-  --primary: 230 75% 65%;
-  --primary-foreground: 222 47% 11%;
-  --primary-border: 230 75% 55%;
-
-  --secondary: 214 32% 20%;
-  --secondary-foreground: 210 40% 98%;
-  --secondary-border: 214 32% 25%;
-
-  --muted: 214 32% 15%;
-  --muted-foreground: 215 16% 65%;
-
-  --accent: 150 70% 45%;
-  --accent-foreground: 0 0% 100%;
-
-  --destructive: 0 62.8% 30.6%;
-  --destructive-foreground: 210 40% 98%;
-
-  --sidebar: 222 47% 11%;
-  --sidebar-foreground: 210 40% 98%;
-  --sidebar-border: 214 32% 20%;
-  --sidebar-primary: 230 75% 65%;
-  --sidebar-primary-foreground: 222 47% 11%;
-  --sidebar-accent: 214 32% 20%;
-  --sidebar-accent-foreground: 210 40% 98%;
+  /* 4px base radius — refined, not sharp */
+  --radius: 0.25rem;
 }
 
 @layer base {
@@ -148,3 +118,9 @@
     @apply font-sans antialiased bg-background text-foreground;
   }
 }
+
+/* Scrollbar — refined dark */
+::-webkit-scrollbar { width: 5px; height: 5px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: hsl(30 6% 18%); border-radius: 9999px; }
+::-webkit-scrollbar-thumb:hover { background: hsl(30 6% 25%); }
