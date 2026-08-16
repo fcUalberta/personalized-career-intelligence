@@ -12,8 +12,8 @@ export default function Dashboard() {
   return (
     <div className="max-w-6xl mx-auto space-y-6">
       <div>
-        <h1 className="text-4xl font-bold uppercase tracking-[-0.02em] leading-none" style={{ fontFamily: "'Archivo Expanded', 'Archivo', sans-serif" }}>Dashboard</h1>
-        <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-muted-foreground mt-2">Real-time intelligence for your career operation.</p>
+        <p className="smallcaps text-[12px] mb-3" style={{ color: '#c0703f' }}>The expedition is hiring</p>
+        <h1 className="serif font-light leading-[0.96] tracking-[-0.02em]" style={{ fontSize: 'clamp(2rem, 4vw, 3.2rem)' }}>Real-time intelligence<br /><span className="font-semibold">for your career.</span></h1>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-4 gap-4">

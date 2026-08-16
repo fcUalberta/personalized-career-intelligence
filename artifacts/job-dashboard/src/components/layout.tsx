@@ -1,5 +1,5 @@
 import { Link, useLocation } from "wouter";
-import { LayoutDashboard, User, Target, Briefcase, BarChart2, Bell, Zap, ArrowUpRight } from "lucide-react";
+import { LayoutDashboard, User, Target, Briefcase, BarChart2, Bell, ArrowUpRight } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 const TICKER = "CAREER COMPASS — REAL-TIME INTELLIGENCE FOR YOUR CAREER — LIVE JOB MATCHES — COMP BENCHMARKING — SKILL GAP ANALYSIS — MARKET POSITIONING — ";
@@ -25,23 +25,27 @@ export function Layout({ children }: { children: React.ReactNode }) {
       {/* Film grain */}
       <div className="grain" aria-hidden="true" />
 
-      {/* ===== Sidebar — dark editorial column ===== */}
-      <div className="w-56 border-r border-sidebar-border bg-sidebar flex flex-col shrink-0">
+      {/* ── Sidebar — warm chocolate dark panel (Voxa left column) ── */}
+      <div className="w-56 bg-sidebar flex flex-col shrink-0" style={{ borderRight: '1px solid rgba(216,203,178,0.14)' }}>
 
-        {/* Brand */}
-        <div className="h-14 flex items-center gap-2.5 px-5 border-b border-sidebar-border">
-          <Zap className="h-3.5 w-3.5 fill-primary text-primary shrink-0" strokeWidth={1.5} />
-          <span
-            className="text-[13px] font-bold tracking-[0.18em] uppercase text-sidebar-foreground leading-none"
-            style={{ fontFamily: "'Archivo Expanded', 'Archivo', sans-serif" }}
-          >
-            Career Compass
-          </span>
+        {/* Brand — "Voxa" style: serif wordmark + smallcaps descriptor */}
+        <div className="px-7 pt-7 pb-6" style={{ borderBottom: '1px solid rgba(216,203,178,0.14)' }}>
+          <div className="flex items-baseline gap-2.5">
+            <span
+              className="text-[22px] font-semibold leading-none tracking-tight text-sidebar-foreground"
+              style={{ fontFamily: "'Fraunces', Georgia, serif" }}
+            >
+              Career Compass
+            </span>
+          </div>
+          <p className="smallcaps text-[11px] mt-1.5" style={{ color: '#b3a285' }}>
+            Career Intelligence · v0.1
+          </p>
         </div>
 
-        {/* Nav */}
-        <nav className="flex-1 py-4 flex flex-col">
-          {navigation.map((item) => {
+        {/* Nav — numbered list style, smallcaps labels */}
+        <nav className="flex-1 py-2">
+          {navigation.map((item, i) => {
             const isActive = location === item.href;
             const Icon = item.icon;
             return (
@@ -49,70 +53,91 @@ export function Layout({ children }: { children: React.ReactNode }) {
                 key={item.name}
                 href={item.href}
                 className={cn(
-                  "relative flex items-center gap-3 px-5 py-3 text-[11px] font-mono uppercase tracking-[0.14em] transition-colors duration-150 border-b border-sidebar-border/40",
+                  "relative flex items-center gap-3 px-7 py-3.5 transition-all duration-200",
                   isActive
-                    ? "bg-sidebar-accent text-primary"
-                    : "text-sidebar-foreground/55 hover:text-sidebar-foreground hover:bg-sidebar-accent/70"
+                    ? "text-sidebar-foreground"
+                    : "hover:text-sidebar-foreground"
                 )}
+                style={{
+                  borderBottom: '1px solid rgba(216,203,178,0.08)',
+                  color: isActive ? '#f2ead9' : '#6e5b44',
+                  paddingLeft: isActive ? '32px' : undefined,
+                }}
               >
+                {/* clay left accent for active */}
                 {isActive && (
-                  <span className="absolute left-0 top-0 bottom-0 w-[2px] bg-primary" />
+                  <span
+                    className="absolute left-0 top-0 bottom-0 w-[2px]"
+                    style={{ background: '#c0703f' }}
+                  />
                 )}
+                <span className="smallcaps text-[11px] w-5 shrink-0" style={{ color: isActive ? '#c0703f' : '#4a3e30' }}>
+                  {String(i + 1).padStart(2, '0')}
+                </span>
                 <Icon
-                  className={cn("shrink-0 h-3.5 w-3.5", isActive ? "text-primary" : "text-sidebar-foreground/40")}
+                  className="shrink-0 h-3.5 w-3.5"
                   strokeWidth={1.5}
+                  style={{ color: isActive ? '#f2ead9' : '#6e5b44' }}
                 />
-                {item.name}
+                <span className="smallcaps text-[12px]">{item.name}</span>
               </Link>
             );
           })}
         </nav>
 
         {/* Status */}
-        <div className="px-5 py-4 border-t border-sidebar-border/40">
-          <div className="flex items-center gap-2 text-[10px] font-mono uppercase tracking-[0.16em] text-sidebar-foreground/35">
+        <div className="px-7 py-5" style={{ borderTop: '1px solid rgba(216,203,178,0.10)' }}>
+          <div className="flex items-center gap-2">
             <span className="relative flex h-1.5 w-1.5 shrink-0">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-50" />
-              <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-primary" />
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full opacity-50" style={{ background: '#c0703f' }} />
+              <span className="relative inline-flex rounded-full h-1.5 w-1.5" style={{ background: '#c0703f' }} />
             </span>
-            Live data connected
+            <span className="smallcaps text-[10px]" style={{ color: '#4a3e30' }}>Live data connected</span>
           </div>
         </div>
       </div>
 
-      {/* ===== Main ===== */}
+      {/* ── Main ── */}
       <div className="flex-1 flex flex-col overflow-hidden min-w-0">
 
-        {/* Masthead */}
-        <header className="flex items-stretch border-b border-border bg-card shrink-0" style={{ height: "3.5rem" }}>
-          <div className="flex items-center px-6 border-r border-border">
-            <span
-              className="text-[11px] font-mono uppercase tracking-[0.2em] text-muted-foreground"
-            >
-              {routeLabel}
-            </span>
+        {/* Masthead — editorial column header */}
+        <header
+          className="flex items-stretch bg-card shrink-0"
+          style={{ height: '3.5rem', borderBottom: '1px solid hsl(var(--border))' }}
+        >
+          <div
+            className="flex items-center px-8"
+            style={{ borderRight: '1px solid hsl(var(--border))' }}
+          >
+            <span className="smallcaps text-[12px]" style={{ color: '#6e5b44' }}>{routeLabel}</span>
           </div>
-          <div className="flex-1 flex items-center px-6">
-            <span className="text-[10px] font-mono uppercase tracking-[0.18em] text-muted-foreground/50">
+          <div className="flex-1 flex items-center px-8">
+            <span className="smallcaps text-[11px]" style={{ color: '#b3a285' }}>
               Career Intelligence Platform
             </span>
           </div>
-          <div className="flex items-center gap-4 px-6 border-l border-border">
-            <span className="text-[10px] font-mono uppercase tracking-[0.16em] text-muted-foreground/50">
+          <div
+            className="flex items-center gap-3 px-8"
+            style={{ borderLeft: '1px solid hsl(var(--border))' }}
+          >
+            <span className="smallcaps text-[11px]" style={{ color: '#b3a285' }}>
               {new Date().toLocaleDateString("en-CA", { year: "numeric", month: "short", day: "numeric" })}
             </span>
-            <span className="h-1.5 w-1.5 rounded-full bg-primary animate-pulse" />
+            <span className="h-1.5 w-1.5 rounded-full animate-pulse" style={{ background: '#c0703f' }} />
           </div>
         </header>
 
-        {/* Ticker */}
-        <div className="w-full overflow-hidden border-b border-border bg-foreground py-2 text-background shrink-0">
+        {/* Ticker — dark bar with cream smallcaps text */}
+        <div
+          className="w-full overflow-hidden shrink-0 py-2"
+          style={{ borderBottom: '1px solid hsl(var(--border))', background: '#211a14' }}
+        >
           <div className="ticker-track flex w-max whitespace-nowrap">
             {[0, 1, 2, 3].map((i) => (
               <span
                 key={i}
-                className="text-[10px] uppercase tracking-[0.22em] px-8 opacity-80"
-                style={{ fontFamily: "'Archivo Expanded', 'Archivo', sans-serif", fontWeight: 600 }}
+                className="smallcaps text-[10px] px-8"
+                style={{ color: '#b3a285' }}
               >
                 {TICKER}
               </span>

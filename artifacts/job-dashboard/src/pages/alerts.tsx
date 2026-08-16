@@ -33,7 +33,8 @@ export default function Alerts() {
     <div className="max-w-4xl mx-auto space-y-6">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-4xl font-bold uppercase tracking-[-0.02em] leading-none" style={{ fontFamily: "'Archivo Expanded', 'Archivo', sans-serif" }}>System Alerts</h1>
+          <p className="smallcaps text-[12px] mb-3" style={{ color: '#c0703f' }}>Section V — Alerts & nudges</p>
+          <h1 className="serif font-light leading-[0.96] tracking-[-0.02em]" style={{ fontSize: 'clamp(2rem, 4vw, 3.2rem)' }}>System<br /><span className="font-semibold">Alerts.</span></h1>
           <p className="text-muted-foreground">Event log for matched data triggers.</p>
         </div>
         <Badge variant="outline" className="font-mono text-sm py-1">

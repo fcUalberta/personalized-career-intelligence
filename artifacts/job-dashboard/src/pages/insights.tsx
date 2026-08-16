@@ -25,7 +25,8 @@ export default function Insights() {
     <div className="max-w-6xl mx-auto space-y-6">
       <div className="flex justify-between items-end">
         <div>
-          <h1 className="text-4xl font-bold uppercase tracking-[-0.02em] leading-none" style={{ fontFamily: "'Archivo Expanded', 'Archivo', sans-serif" }}>Market Insights</h1>
+          <p className="smallcaps text-[12px] mb-3" style={{ color: '#c0703f' }}>Section IV — Compensation, compared</p>
+          <h1 className="serif font-light leading-[0.96] tracking-[-0.02em]" style={{ fontSize: 'clamp(2rem, 4vw, 3.2rem)' }}>Market<br /><span className="font-semibold">Insights.</span></h1>
           <p className="text-muted-foreground">Macro data analysis against your specific trajectory.</p>
         </div>
         
