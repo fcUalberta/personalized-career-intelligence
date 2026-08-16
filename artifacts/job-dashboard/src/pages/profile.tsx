@@ -95,7 +95,7 @@ export default function Profile() {
   return (
     <div className="max-w-4xl mx-auto space-y-6">
       <div>
-        <p className="smallcaps text-[12px] mb-3" style={{ color: '#c0703f' }}>Section I — Your profile</p>
+        <p className="smallcaps text-[12px] mb-3" style={{ color: '#E2491F' }}>Section I — Your profile</p>
         <h1 className="serif font-light leading-[0.96] tracking-[-0.02em]" style={{ fontSize: 'clamp(2rem, 4vw, 3.2rem)' }}>Job Seeker<br /><span className="font-semibold">Profile.</span></h1>
         <p className="text-muted-foreground">Define your current state to calibrate matches.</p>
       </div>

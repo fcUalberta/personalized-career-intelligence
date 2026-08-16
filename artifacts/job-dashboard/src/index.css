@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght,SOFT@9..144,300..700,50&family=Archivo:wght@300;400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght,SOFT@9..144,300..700,100&family=Karla:wght@400;500;600;700&display=swap');
 @import 'tailwindcss';
 @import 'tw-animate-css';
 @plugin "@tailwindcss/typography";
@@ -49,63 +49,64 @@
   --font-mono: var(--app-font-mono);
   --font-display: var(--app-font-display);
 
+  /* 28px rounded cards — the Marrow & Loom bento signature */
   --radius-sm: var(--radius);
-  --radius-md: var(--radius);
-  --radius-lg: var(--radius);
-  --radius-xl: var(--radius);
+  --radius-md: calc(var(--radius) * 1.5);
+  --radius-lg: calc(var(--radius) * 2);
+  --radius-xl: calc(var(--radius) * 3);
 }
 
 :root {
-  /* ── Voxa palette ── */
-  --background: 41 49% 90%;     /* #f2ead9 warm cream */
-  --foreground: 28 25% 10%;     /* #211a14 warm ink */
-  --border: 40 33% 77%;         /* #d8cbb2 bone — hairline editorial */
-  --input: 40 41% 84%;          /* #e7dcc6 cream-deep */
-  --ring: 23 51% 50%;           /* #c0703f clay */
+  /* ── Marrow & Loom palette ── */
+  --background: 41 49% 90%;     /* #F2EAD9 warm paper */
+  --foreground: 27 31% 13%;     /* #2A1F16 warm ink */
+  --border: 27 15% 82%;         /* soft ink-tinted hairline */
+  --input: 41 40% 85%;
+  --ring: 13 77% 50%;           /* #E2491F orange-red */
 
-  /* Card: cream-deep, slightly richer than background */
-  --card: 40 41% 84%;           /* #e7dcc6 */
-  --card-foreground: 28 25% 10%;
-  --card-border: 40 33% 77%;
+  /* Card: FBF6EB — lighter paper, the bento card fill */
+  --card: 41 67% 95%;           /* #FBF6EB */
+  --card-foreground: 27 31% 13%;
+  --card-border: 27 15% 82%;
 
-  --popover: 40 41% 84%;
-  --popover-foreground: 28 25% 10%;
-  --popover-border: 40 33% 77%;
+  --popover: 41 67% 95%;
+  --popover-foreground: 27 31% 13%;
+  --popover-border: 27 15% 82%;
 
-  /* Clay / terracotta — the editorial accent */
-  --primary: 23 51% 50%;        /* #c0703f */
+  /* Orange-red accent — the editorial signal color */
+  --primary: 13 77% 50%;        /* #E2491F */
   --primary-foreground: 41 49% 90%;
-  --primary-border: 23 51% 38%;
+  --primary-border: 13 77% 38%;
 
-  --secondary: 40 41% 84%;
-  --secondary-foreground: 28 25% 10%;
-  --secondary-border: 40 33% 77%;
+  --secondary: 41 40% 85%;
+  --secondary-foreground: 27 31% 13%;
+  --secondary-border: 27 15% 82%;
 
-  --muted: 40 25% 86%;
-  --muted-foreground: 33 24% 35%;  /* #6e5b44 umber */
+  --muted: 41 30% 87%;
+  --muted-foreground: 27 18% 42%;
 
   /* Emerald kept for positive data signals */
   --accent: 152 40% 38%;
   --accent-foreground: 41 49% 90%;
 
-  --destructive: 0 65% 48%;
+  --destructive: 13 77% 50%;
   --destructive-foreground: 41 49% 90%;
 
-  /* Sidebar: warm chocolate dark panel */
-  --sidebar: 25 24% 10%;        /* #1f1813 */
+  /* Sidebar: warm ink dark panel */
+  --sidebar: 27 31% 13%;        /* #2A1F16 */
   --sidebar-foreground: 41 49% 90%;
-  --sidebar-border: 33 18% 16%; /* subtle warm divider */
-  --sidebar-primary: 23 51% 50%; /* clay */
+  --sidebar-border: 27 20% 18%;
+  --sidebar-primary: 13 77% 50%; /* orange-red */
   --sidebar-primary-foreground: 41 49% 90%;
-  --sidebar-accent: 33 18% 14%;
+  --sidebar-accent: 27 20% 17%;
   --sidebar-accent-foreground: 41 49% 90%;
 
-  --app-font-sans: 'Archivo', system-ui, sans-serif;
-  --app-font-mono: 'Archivo', system-ui, sans-serif; /* Archivo for everything — no cold mono */
+  --app-font-sans: 'Karla', system-ui, sans-serif;
+  --app-font-mono: 'Karla', system-ui, sans-serif;
   --app-font-display: 'Fraunces', Georgia, serif;
 
-  /* Sharp — zero radius, editorial columns */
-  --radius: 0rem;
+  /* 0.875rem base → rounded-lg = 28px, matching Marrow & Loom bento cards */
+  --radius: 0.875rem;
 }
 
 @layer base {
@@ -117,20 +118,32 @@
   }
 }
 
-/* ── Smallcaps utility (Archivo + tracking, like Voxa's .smallcaps) ── */
+/* ── Smallcaps — Karla bold, 0.18em tracking (Marrow & Loom sc-label) ── */
 .smallcaps {
-  font-family: 'Archivo', system-ui, sans-serif;
+  font-family: 'Karla', system-ui, sans-serif;
   font-variant-caps: all-small-caps;
-  letter-spacing: 0.14em;
-  font-feature-settings: 'c2sc', 'smcp';
+  letter-spacing: 0.18em;
+  font-weight: 700;
+  font-size: 0.82rem;
+  line-height: 1;
 }
 
-/* ── Serif display font shortcut ── */
+/* ── Serif display shortcut ── */
 .serif {
   font-family: 'Fraunces', Georgia, serif;
 }
 
-/* ── Film grain ── */
+/* ── Card hover lift (Marrow & Loom .card-hover) ── */
+.card-lift {
+  transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1),
+              box-shadow 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.card-lift:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 20px 40px -20px rgba(42, 31, 22, 0.28);
+}
+
+/* ── Grain overlay (on dark ink cards) ── */
 @keyframes grainShift {
   0%  { transform: translate(0, 0); }
   10% { transform: translate(-2%, -3%); }
@@ -146,23 +159,23 @@
 }
 .grain {
   position: fixed; inset: -50%; width: 200%; height: 200%;
-  pointer-events: none; z-index: 60; opacity: 0.03;
+  pointer-events: none; z-index: 60; opacity: 0.04;
   background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
   animation: grainShift 1.2s steps(6) infinite;
 }
 
-/* ── Ticker ── */
-@keyframes ticker {
+/* ── Marquee/ticker ── */
+@keyframes marquee {
   from { transform: translateX(0); }
   to   { transform: translateX(-50%); }
 }
-.ticker-track { animation: ticker 42s linear infinite; }
+.ticker-track { animation: marquee 32s linear infinite; }
 
 /* ── Text selection ── */
-::selection { background: #c0703f; color: #f2ead9; }
+::selection { background: #E2491F; color: #F2EAD9; }
 
 /* ── Scrollbar ── */
 ::-webkit-scrollbar { width: 4px; height: 4px; }
 ::-webkit-scrollbar-track { background: transparent; }
-::-webkit-scrollbar-thumb { background: #d8cbb2; }
-::-webkit-scrollbar-thumb:hover { background: #b3a285; }
+::-webkit-scrollbar-thumb { background: rgba(42,31,22,0.2); border-radius: 9999px; }
+::-webkit-scrollbar-thumb:hover { background: rgba(42,31,22,0.35); }

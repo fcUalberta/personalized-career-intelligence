@@ -12,7 +12,7 @@ export default function Dashboard() {
   return (
     <div className="max-w-6xl mx-auto space-y-6">
       <div>
-        <p className="smallcaps text-[12px] mb-3" style={{ color: '#c0703f' }}>The expedition is hiring</p>
+        <p className="smallcaps text-[12px] mb-3" style={{ color: '#E2491F' }}>Your career command centre</p>
         <h1 className="serif font-light leading-[0.96] tracking-[-0.02em]" style={{ fontSize: 'clamp(2rem, 4vw, 3.2rem)' }}>Real-time intelligence<br /><span className="font-semibold">for your career.</span></h1>
       </div>
 
