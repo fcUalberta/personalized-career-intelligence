@@ -169,6 +169,50 @@ Scores are shown as a percentile label (e.g. `50% MATCH`) on every job card.
 
 ---
 
+## Screenshots
+
+### Dashboard
+> Live match feed, stat cards, market position snapshot, and system status — all at a glance.
+
+![Dashboard](screenshots/dashboard.jpg)
+
+---
+
+### Profile
+> Set your current title, skills, years of experience, location, and compensation floor to calibrate all match scoring.
+
+![Profile](screenshots/profile.jpg)
+
+---
+
+### Target Roles
+> Track up to N roles with location and salary floor — each one becomes a scoring vector for the job feed and insights engine.
+
+![Target Roles](screenshots/target-roles.jpg)
+
+---
+
+### Live Job Feed
+> Real jobs from Adzuna scored and filtered in real time. Filter by target role or minimum match threshold. Matched and gap skills shown per listing.
+
+![Live Jobs](screenshots/jobs.jpg)
+
+---
+
+### Market Insights
+> Per-role skill gap heatmap, compensation percentile band (P25 → P75), and predicted career trajectory based on your current profile node.
+
+![Insights](screenshots/insights.jpg)
+
+---
+
+### Alerts
+> Event log for job matches, comp changes, skill gap nudges, and trajectory signals — with unread indicators and one-click dismiss.
+
+![Alerts](screenshots/alerts.jpg)
+
+---
+
 ## License
 
 MIT — free to use, modify, and distribute.
