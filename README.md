@@ -10,6 +10,9 @@
 
 Career Compass is a full-stack job intelligence dashboard for active job seekers. It pulls live job listings from Adzuna, scores them against your profile and target roles, benchmarks your compensation against market data, and surfaces skill gaps — all updated continuously.
 
+Demo Video: https://drive.google.com/file/d/1vXLLDtQlTPcuK71YR9qaggEDOTqzUjAd/view?usp=sharing 
+Project Overview: https://docs.google.com/document/d/12x6JZzHu1BFfzfcf8mlv4sq6sUgrZ81nmchoHhRaVmc/edit?usp=sharing
+
 **Key capabilities:**
 
 | Feature | What it does |
